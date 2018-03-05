@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
+from audioplayer import views as adv
 
 urlpatterns = [
     url('admin/', admin.site.urls),
-    url(r'^$', include('personal.urls')),
+    url(r'^ap/', include ('audioplayer.urls')),
 ]
