@@ -6,29 +6,41 @@ import hashlib
 
 API_KEY="e994e38da0dffa0d754afaadab0b8c90"
 Secret="06cbc89c47c9580ceea04493b735b432"
+ytkey="AIzaSyAeBQCitMcOktbV4jPZqoF10Lve62I-jr8"
 
 # Create your views here.
 def index(request):
     return render(request, 'audioplayer/index.html')
 
 def play(request):
-    url = "https://www.youtube.com/watch?v=8367ETnagHo"
+    url = "https://itunes.apple.com/search?term=havana&country=IN&media=music&entity=musicTrack&attribute=songTerm"
     signin_url='http://www.last.fm/api/auth/?api_key=%s' %API_KEY
+    #music=requests.get(url)
+    #print(music[0)
     return HttpResponseRedirect(signin_url)
 
 def login_complete(request):
     token = request.GET["token"]
 
-    #session="api_key%smethodauth.getSessiontoken%s" %(API_KEY.encode('utf-8'),token.encode('utf-8'))
+    sig_param="api_key%smethodauth.getSessiontoken%s%s" %(API_KEY,token,Secret)
     
-    #api_signa=hashlib.md5(session.encode()).hexdigest()
+    api_signa=hashlib.md5(sig_param.encode()).hexdigest()
 
-    #url="http://ws.audioscrobbler.com/2.0/?method=auth.getSession&api_key=%s &token=%s &api_sig=%s" %(API_KEY,token,api_signa)
+    print(api_signa)
+    
+
+    url="http://ws.audioscrobbler.com/2.0/?method=auth.getSession&token=%s&api_key=%s&api_sig=%s" %(token,API_KEY,api_signa)
 
     #return HttpResponseRedirect(url)
 
-    #ses=requests.get(url)
+    ses=requests.get(url)
+    #ses=ses.json()
+    print(ses.text);
 
+    url1="https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=havana&type=video&key=%s" %(ytkey)
+
+    videodetails=requests.get(url1)
+    print(videodetails.text)
     #request.session['username']=ses['name']
     
     user = authenticate(token=token)
