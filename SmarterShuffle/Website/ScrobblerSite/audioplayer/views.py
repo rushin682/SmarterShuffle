@@ -3,6 +3,8 @@ import requests
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 import hashlib
+import json
+import xml.etree.ElementTree as ET
 
 API_KEY="e994e38da0dffa0d754afaadab0b8c90"
 Secret="06cbc89c47c9580ceea04493b735b432"
@@ -34,18 +36,36 @@ def login_complete(request):
     #return HttpResponseRedirect(url)
 
     ses=requests.get(url)
-    #ses=ses.json()
-    print(ses.text);
+    ses=ses.content.decode()
+    #ses=json.loads(ses)
+    #ses=json.dumps(ses)
+    root = ET.fromstring(ses)
+    print(root[0][0].text);
 
-    url1="https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=havana&type=video&key=%s" %(ytkey)
-
-    videodetails=requests.get(url1)
-    print(videodetails.text)
+    
+    request.session['username']=root[0][0].text
+    print("here")
+    
     #request.session['username']=ses['name']
     
     user = authenticate(token=token)
     if user:
         login(request, user)
 
-    return HttpResponseRedirect("/admin/")
+    return HttpResponseRedirect("/ap/index")
     
+def logout(request):
+    try:
+        del request.session['username']
+    except KeyError:
+        pass
+
+    return HttpResponseRedirect("/ap/index")
+
+def youtubeurl(request):
+    url1="https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=havana&type=video&key=%s" %(ytkey)
+    videodetails=requests.get(url1)
+    videodetails=videodetails.json()
+    videoid=videodetails["items"][0]["id"]["videoId"]
+    print(videoid)
+    songurl="https://www.youtube.com/watch?v=%s" %(videoid)
