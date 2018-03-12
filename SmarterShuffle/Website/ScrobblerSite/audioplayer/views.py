@@ -6,6 +6,8 @@ import hashlib
 import json
 import xml.etree.ElementTree as ET
 
+from .forms import SearchBar
+
 API_KEY="e994e38da0dffa0d754afaadab0b8c90"
 Secret="06cbc89c47c9580ceea04493b735b432"
 ytkey="AIzaSyAeBQCitMcOktbV4jPZqoF10Lve62I-jr8"
@@ -69,3 +71,12 @@ def youtubeurl(request):
     videoid=videodetails["items"][0]["id"]["videoId"]
     print(videoid)
     songurl="https://www.youtube.com/watch?v=%s" %(videoid)
+
+def search_value(request):
+    if request.method == 'POST':
+        form = SearchBar(request.POST)
+        if form.is_valid():
+
+
+            return HttpReponseRedirect('/ap/index/results')
+        return render(request, 'player_header.html', {'form' : form})
