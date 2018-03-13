@@ -66,11 +66,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="profile_details">		
 						  <div class="col-md-4 serch-part">
 								<div id="sb-search" class="sb-search">
-									<form action="/results/" method="post">
-										<!--<input class="sb-search-input" placeholder="Search" type="search" name="search" id="search">
-										<input class="sb-search-submit" type="submit" value="">-->
+									<form action="{% url 'youTube_query' %}" method="post">
 										{% csrf_token %}
-										{{ form }}	
+										<input class="sb-search-input" placeholder="Search" type="search" name="search" id="search">
+										<input class="sb-search-submit" type="submit" value="">
+											
 									<span class="sb-icon-search"> </span>
 									</form>
 								</div>
@@ -86,7 +86,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											  <div class="col-md-4 player">
 													<div class="audio-player">
 														<audio id="audio-player"  controls="controls">
-														<source src="{% static 'media/Blue Browne.ogg' %}" type="audio/ogg"></source>
+																<source src="{% static 'media/Blue Browne.ogg' %}" type="audio/ogg"></source>
 																<source src="{% static 'media/Blue Browne.mp3' %}" type="audio/mpeg"></source>
 																<source src="{% static 'media/Georgia.ogg' %}" type="audio/ogg"></source>
 																<source src="{% static 'media/Georgia.mp3' %}" type="audio/mpeg"></source></audio>
