@@ -4,9 +4,10 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 import hashlib
 import json
+import pafy
 import xml.etree.ElementTree as ET
 
-from .forms import SearchBar
+
 
 API_KEY="e994e38da0dffa0d754afaadab0b8c90"
 Secret="06cbc89c47c9580ceea04493b735b432"
@@ -65,18 +66,25 @@ def logout(request):
     return HttpResponseRedirect("/ap/index")
 
 def youtubeurl(request):
-    url1="https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=havana&type=video&key=%s" %(ytkey)
-    videodetails=requests.get(url1)
-    videodetails=videodetails.json()
-    videoid=videodetails["items"][0]["id"]["videoId"]
-    print(videoid)
-    songurl="https://www.youtube.com/watch?v=%s" %(videoid)
-
-def search_value(request):
     if request.method == 'POST':
-        form = SearchBar(request.POST)
-        if form.is_valid():
+        search_query = request.POST.get('search', None)
+    
+    url1="https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&q=%s&type=video&key=%s" %(search_query,ytkey)
+    videodetails=requests.get(url1)
+    videodetails = videodetails.json()
+   # for item_num in videodetails :
+       # dictionary[item_num] = item_num['snippet']
+    return render(request, 'audioplayer/index.html', {'videodetails':videodetails["items"]})
+    #songurl="https://www.youtube.com/watch?v=%s" %(videoid) '''
 
-
-            return HttpReponseRedirect('/ap/index/results')
-        return render(request, 'player_header.html', {'form' : form})
+def pafy1(request,videoid=None):
+    videoid=request.GET.get("videoid", None)
+    songurl="https://www.youtube.com/watch?v=%s" %(videoid)
+    if videoid!=None:
+        video = pafy.new(songurl)
+        bestaudio = video.getbestaudio()
+        streamingurl=bestaudio.url
+        return render(request, 'audioplayer/player_header.html',{'streamurl': streamingurl})
+    return HttpResponseRedirect("/ap/index")
+    
+    

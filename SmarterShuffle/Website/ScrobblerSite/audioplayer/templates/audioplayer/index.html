@@ -6,74 +6,7 @@
 				<div class="inner-content">
 				
 				      <div class="music-left">
-					      <!--banner-section-->
-							<div class="banner-section">
-								<div class="banner">
-									 <div class="callbacks_container">
-										<ul class="rslides callbacks callbacks1" id="slider4">
-											   	<li>
-														<div class="banner-img">
-															 <img src="{% static 'images/11.jpg' %}" class="img-responsive" alt="">
-														 </div>
-														<div class="banner-info">
-														              <a class="trend" href="single.html">TRENDING</a>
-																	  <h3>Let Your Home</h3>
-																	  <p>Album by <span>Rock star</span></p>
-														 </div>
-
-												</li>
-												<li>
-													<div class="banner-img">
-															 <img src="{% static 'images/22.jpg' %}" class="img-responsive" alt="">
-														 </div>
-														<div class="banner-info">
-																	  <a class="trend" href="single.html">TRENDING</a>
-																	  <h3>Charis Brown feet</h3>
-																	  <p>Album by <span>Rock star</span></p>
-														 </div>
-
-
-												</li>
-												<li>
-												 <div class="banner-img">
-															 <img src="{% static 'images/33.jpg' %}" class="img-responsive" alt="">
-														 </div>
-														<div class="banner-info"> 
-														             <a class="trend" href="single.html">TRENDING</a>
-																	  <h3>Let Your Home</h3>
-																	  <p>Album by <span>Rock star</span></p>
-														 </div>
-
-												 	 <!-- /w3layouts-agileits -->
-												</li>
-											</ul>
-										</div>
-										<!--banner-->
-									<script src="{% static 'js/responsiveslides.min.js' %}"></script>
-								 <script>
-									// You can also use "$(window).load(function() {"
-									$(function () {
-									  // Slideshow 4
-									  $("#slider4").responsiveSlides({
-										auto: true,
-										pager:true,
-										nav:true,
-										speed: 500,
-										namespace: "callbacks",
-										before: function () {
-										  $('.events').append("<li>before event fired.</li>");
-										},
-										after: function () {
-										  $('.events').append("<li>after event fired.</li>");
-										}
-									  });
-								
-									});
-								  </script>
-								<div class="clearfix"> </div>
-							</div>
-						</div>	
-				<!--//End-banner-->
+					      
 					<!--albums-->
 					<!-- pop-up-box --> 
 							<link href="{% static 'css/popuo-box.css' %}" rel="stylesheet" type="text/css" media="all">
@@ -96,58 +29,20 @@
 					<!--//pop-up-box -->
 						<div class="albums">
 								<div class="tittle-head">
-									<h3 class="tittle">New Releases <span class="new">New</span></h3>
-									<a href="index.html"><h4 class="tittle">See all</h4></a>
+									<h3 class="tittle">Your Feed <span class="new">New</span></h3>
 									<div class="clearfix"> </div>
 								</div>
-								<div class="col-md-3 content-grid">
-								<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="{% static 'images/v1.jpg' %}" title="allbum-name"></a>
-								<a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
-							</div>
-							<div id="small-dialog" class="mfp-hide">
-								<iframe src="{% static 'https://player.vimeo.com/video/12985622' %}"></iframe>
-								
-							</div>
+ 	
+							{% if videodetails %}
+							{% for num in videodetails %}
 							<div class="col-md-3 content-grid">
-								<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="{% static 'images/v2.jpg' %}" title="allbum-name"></a>
-
-								<a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+								<a class="play-icon popup-with-zoom-anim" href="{% url 'pafy' videoid=num.id.videoid %}"><img src="{{ num.snippet.thumbnails.high.url }}" title="allbum-name"></a>
+								<a class="button play-icon popup-with-zoom-anim" href="{% url 'pafy' videoid=num.id.videoid %}">{{ num.snippet.title }}</a> 
 							</div>
-							<div class="col-md-3 content-grid">
-								<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="{% static 'images/v3.jpg' %}" title="allbum-name"></a>
-
-								<a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
+							{% endfor %}
+							{% endif %}
+							<div class="clearfix"> </div>
 							</div>
-							<div class="col-md-3 content-grid last-grid">
-								<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="{% static 'images/v4.jpg' %}" title="allbum-name"></a>
-	
-								<a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
-							</div>
-							<div class="col-md-3 content-grid">
-								<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="{% static 'images/v5.jpg' %}" title="allbum-name"></a>
-
-								<a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
-							</div>
-							<div id="small-dialog" class="mfp-hide">
-								<iframe src="{% static 'https://player.vimeo.com/video/12985622' %}"></iframe>
-								
-							</div>
-							<div class="col-md-3 content-grid">
-								<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="{% static 'images/v6.jpg' %}" title="allbum-name"></a>
-		
-								<a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
-							</div>
-							<div class="col-md-3 content-grid">
-								<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="{% static 'images/v7.jpg' %}" title="allbum-name"></a>
-
-								<a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
-							</div>
-							<div class="col-md-3 content-grid last-grid">
-								<a class="play-icon popup-with-zoom-anim" href="#small-dialog"><img src="{% static 'images/v8.jpg' %}" title="allbum-name"></a>
-												<a class="button play-icon popup-with-zoom-anim" href="#small-dialog">Listen now</a>
-											</div>
-											<div class="clearfix"> </div>
-										</div>
 					<!--//End-albums-->
 						<!--//discover-view-->
 						
