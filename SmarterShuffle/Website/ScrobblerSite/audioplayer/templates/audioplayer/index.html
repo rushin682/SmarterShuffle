@@ -26,6 +26,14 @@
 									});
 									});
 									
+									$(document).ready(function() {
+										$('#song').click(function() {
+											$.ajax({
+													$("#audio-player").load(location.href + " #audioplayer");
+													});
+										});
+									});
+									
 							</script>		
 					<!--//pop-up-box -->
 						<div class="albums">
@@ -38,7 +46,7 @@
 							{% for num in videodetails %}
 							
 							<div class="col-md-3 content-grid">
-								<a class="play-icon popup-with-zoom-anim" href="{% url 'pafy' video_id=num.id.videoId %}" ><img src="{{ num.snippet.thumbnails.high.url }}" title="allbum-name"></a>
+								<a class="play-icon popup-with-zoom-anim" href="{% url 'pafy' video_id=num.id.videoId %}" id="song"><img src="{{ num.snippet.thumbnails.high.url }}" title="allbum-name"></a>
 								<a class="button play-icon popup-with-zoom-anim" href="{% url 'pafy' video_id=num.id.videoId %}" id="song">{{ num.snippet.title }}</a> 
 							</div>
 							{% endfor %}
