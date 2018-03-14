@@ -77,14 +77,13 @@ def youtubeurl(request):
     return render(request, 'audioplayer/index.html', {'videodetails':videodetails["items"]})
     #songurl="https://www.youtube.com/watch?v=%s" %(videoid) '''
 
-def pafy1(request,videoid=None):
-    videoid=request.GET.get("videoid", None)
-    songurl="https://www.youtube.com/watch?v=%s" %(videoid)
-    if videoid!=None:
+def pafy(request,video_id):
+    #videoid=request.GET.get("videoid", None)
+    songurl="https://www.youtube.com/watch?v=%s" %(video_id)
+    if video_id!=None:
         video = pafy.new(songurl)
         bestaudio = video.getbestaudio()
         streamingurl=bestaudio.url
         return render(request, 'audioplayer/player_header.html',{'streamurl': streamingurl})
     return HttpResponseRedirect("/ap/index")
-    
     
