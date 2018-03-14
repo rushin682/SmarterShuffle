@@ -36,8 +36,8 @@
 							{% if videodetails %}
 							{% for num in videodetails %}
 							<div class="col-md-3 content-grid">
-								<a class="play-icon popup-with-zoom-anim" href="{% url 'pafy' videoid=num.id.videoid %}"><img src="{{ num.snippet.thumbnails.high.url }}" title="allbum-name"></a>
-								<a class="button play-icon popup-with-zoom-anim" href="{% url 'pafy' videoid=num.id.videoid %}">{{ num.snippet.title }}</a> 
+								<a class="play-icon popup-with-zoom-anim" href="{% url 'pafy' num.id.videoid %}"><img src="{{ num.snippet.thumbnails.high.url }}" title="allbum-name"></a>
+								<a class="button play-icon popup-with-zoom-anim" href="{% url 'pafy' num.id.videoid %}">{{ num.snippet.title }}</a> 
 							</div>
 							{% endfor %}
 							{% endif %}

@@ -78,8 +78,9 @@ def youtubeurl(request):
     #songurl="https://www.youtube.com/watch?v=%s" %(videoid) '''
 
 def pafy1(request,videoid=None):
-    videoid=request.GET.get("videoid", None)
-    songurl="https://www.youtube.com/watch?v=%s" %(videoid)
+    #if request.method=='GET':
+    videoi=request.GET.get('videoid', '')
+    songurl="https://www.youtube.com/watch?v=%s" %(videoi)
     if videoid!=None:
         video = pafy.new(songurl)
         bestaudio = video.getbestaudio()
