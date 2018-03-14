@@ -25,6 +25,7 @@
 										mainClass: 'my-mfp-zoom-in'
 									});
 									});
+									
 							</script>		
 					<!--//pop-up-box -->
 						<div class="albums">
@@ -35,9 +36,10 @@
  	
 							{% if videodetails %}
 							{% for num in videodetails %}
+							
 							<div class="col-md-3 content-grid">
-								<a class="play-icon popup-with-zoom-anim" href="{% url 'pafy' num.id.videoid %}"><img src="{{ num.snippet.thumbnails.high.url }}" title="allbum-name"></a>
-								<a class="button play-icon popup-with-zoom-anim" href="{% url 'pafy' num.id.videoid %}">{{ num.snippet.title }}</a> 
+								<a class="play-icon popup-with-zoom-anim" href="{% url 'pafy' video_id=num.id.videoId %}" ><img src="{{ num.snippet.thumbnails.high.url }}" title="allbum-name"></a>
+								<a class="button play-icon popup-with-zoom-anim" href="{% url 'pafy' video_id=num.id.videoId %}" id="song">{{ num.snippet.title }}</a> 
 							</div>
 							{% endfor %}
 							{% endif %}
@@ -101,17 +103,21 @@
 									<div class="clearfix"> </div>
 								</div>
 								 <ul id="flexiselDemo1">
+								 {% if tracks %}
+							{% for num in tracks %}
 								<li>
-									<a href="single.html"><img src="{% static 'images/v1.jpg' %}" alt=""/></a>
-									<div class="slide-title"><h4>Adele21 </div>
+									<a href="single.html"><img src="{{ num.image.1.size }}" alt=""/></a>
+									<div class="slide-title"><h4>{{num.name}} </div>
 									<div class="date-city">
-										<h5>Jan-02-16</h5>
+										<h5>PLAYCOUNT</h5>
 										<div class="buy-tickets">
-											<a href="single.html">READ MORE</a>
+											<a href="single.html">{{num.playcount}}</a>
 										</div>
 									</div>
 								</li>
-								<li>
+								{% endfor %}
+							{% endif %}
+								<!--<li>
 									<a href="single.html"><img src="{% static 'images/v2.jpg' %}" alt=""/></a>
 									<div class="slide-title"><h4>Adele21</h4></div>
 									<div class="date-city">
@@ -170,7 +176,7 @@
 											<a href="single.html">READ MORE</a>
 										</div>
 									</div>
-								</li>
+								</li>-->
 							</ul>
 							<script type="text/javascript">
 						$(window).load(function() {

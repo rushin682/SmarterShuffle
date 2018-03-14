@@ -55,7 +55,7 @@ def login_complete(request):
     if user:
         login(request, user)
 
-    return HttpResponseRedirect("/ap/index")
+    return lovedtracks(request)
     
 def logout(request):
     try:
@@ -77,15 +77,22 @@ def youtubeurl(request):
     return render(request, 'audioplayer/index.html', {'videodetails':videodetails["items"]})
     #songurl="https://www.youtube.com/watch?v=%s" %(videoid) '''
 
-def pafy1(request,videoid=None):
-    #if request.method=='GET':
-    videoi=request.GET.get('videoid', '')
-    songurl="https://www.youtube.com/watch?v=%s" %(videoi)
-    if videoid!=None:
-        video = pafy.new(songurl)
-        bestaudio = video.getbestaudio()
-        streamingurl=bestaudio.url
-        return render(request, 'audioplayer/player_header.html',{'streamurl': streamingurl})
-    return HttpResponseRedirect("/ap/index")
-    
-    
+
+def pafy1(request,video_id):
+    #videoid=request.GET.get('video_id')
+    songurl="https://www.youtube.com/watch?v=%s" %(video_id)
+    print(songurl)
+    #if video_id!=None:
+    video = pafy.new(songurl)
+    bestaudio = video.getbestaudio()
+    streamingurl=bestaudio.url
+    return render(request, 'audioplayer/index.html',{'streamurl': streamingurl})
+    #return HttpResponseRedirect("/ap/index")
+
+def lovedtracks(request):
+    url1="http://ws.audioscrobbler.com/2.0/?method=user.gettoptracks&user=%s&limit=15&api_key=%s&format=json" %(request.session['username'],API_KEY)
+    tracks=requests.get(url1)
+    tracks=tracks.json()
+    #tracks = tracks.replace("\"#text\":", "\"text\":");
+    print(tracks["toptracks"]["track"][0]["image"][1]["#text"])
+    return render(request, 'audioplayer/index.html',{'tracks':tracks["toptracks"]["track"]})
