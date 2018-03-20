@@ -9,9 +9,9 @@ import xml.etree.ElementTree as ET
 
 
 
-API_KEY=config('API_KEY')
-Secret=config('SECRET')
-ytkey=config('YT_KEY')
+API_KEY="e994e38da0dffa0d754afaadab0b8c90"
+Secret="06cbc89c47c9580ceea04493b735b432"
+ytkey="AIzaSyAeBQCitMcOktbV4jPZqoF10Lve62I-jr8"
 
 # Create your views here.
 def index(request):
@@ -86,13 +86,19 @@ def pafy1(request,video_id):
     video = pafy.new(songurl)
     bestaudio = video.getbestaudio()
     streamingurl=bestaudio.url
-    return render(request, 'audioplayer/index.html',{'streamurl': streamingurl})
+    p={}
+    p['streamurl']=streamingurl
+    #return render(request, 'audioplayer/index.html',{'streamurl': streamingurl})
     #return HttpResponseRedirect("/ap/index")
+    return HttpResponse(json.dumps(p), content_type="application/json")
 
 def lovedtracks(request):
     url1="http://ws.audioscrobbler.com/2.0/?method=user.gettoptracks&user=%s&limit=15&api_key=%s&format=json" %(request.session['username'],API_KEY)
     tracks=requests.get(url1)
     tracks=tracks.json()
     #tracks = tracks.replace("\"#text\":", "\"text\":");
-    print(tracks["toptracks"]["track"][0]["image"][1]["#text"])
+    for i in range(0,15):
+        tracks["toptracks"]["track"][i]["image"][2]["text"]=tracks["toptracks"]["track"][i]["image"][2]["#text"]
+        del tracks["toptracks"]["track"][i]["image"][2]["#text"]
+    print(tracks["toptracks"]["track"][0]["image"][2]["text"])
     return render(request, 'audioplayer/index.html',{'tracks':tracks["toptracks"]["track"]})
