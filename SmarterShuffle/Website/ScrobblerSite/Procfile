@@ -1,0 +1,1 @@
+web: gunicorn SmarterShuffle.wsgi --log-file -

@@ -9,9 +9,9 @@ import xml.etree.ElementTree as ET
 
 
 
-API_KEY="e994e38da0dffa0d754afaadab0b8c90"
-Secret="06cbc89c47c9580ceea04493b735b432"
-ytkey="AIzaSyAeBQCitMcOktbV4jPZqoF10Lve62I-jr8"
+API_KEY=config('API_KEY')
+Secret=config('SECRET')
+ytkey=config('YT_KEY')
 
 # Create your views here.
 def index(request):
